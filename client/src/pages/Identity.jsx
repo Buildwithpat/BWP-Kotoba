@@ -77,10 +77,29 @@ function Identity() {
 
     const selectedAvatar = index;
 
+    // SAVE FIRST — ALWAYS
     sessionStorage.setItem("name", name);
     sessionStorage.setItem("avatar", selectedAvatar);
 
-    navigate("/room");
+    // Then create room
+    socket.emit(
+      "createRoom",
+      {
+        name: name,
+        avatar: selectedAvatar,
+      },
+      (room) => {
+        navigate("/room", {
+          state: {
+            roomId: room.roomId,
+            players: room.players,
+            host: room.host,
+            playerName: name,
+            avatar: selectedAvatar,
+          },
+        });
+      },
+    );
   };
 
   return (
