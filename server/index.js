@@ -20,6 +20,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Server is alive");
+})
+
 const server = http.createServer(app);
 
 const io = new Server(server, {
