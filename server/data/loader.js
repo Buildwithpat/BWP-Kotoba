@@ -48,7 +48,7 @@ function loadCategory(fileName) {
 ========================= */
 
 const datasets = {
-  words,
+  words: loadDictionary(),
 
   animals: loadCategory("animals.json"),
   carBrands: loadCategory("carBrands.json"),
@@ -72,5 +72,8 @@ Object.keys(datasets).forEach((key) => {
   }
 });
 
-module.exports = datasets;
+module.exports = {
+  loadDictionary,
+  datasets
+};
 

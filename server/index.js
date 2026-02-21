@@ -4,6 +4,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const datasets = require("./data/loader");
+const {loadDictionary} = require("./data/loader");
 const GameStats = require("./models/GameStats");
 
 let analytics = {
@@ -185,7 +186,7 @@ io.on("connection", (socket) => {
         return;
       }
 
-      if (!datasets.words.has || datasets.words.has(lower)) {
+      if (!loadDictionary().has(lower)) {
         socket.emit("wordRejected");
         return;
       }
