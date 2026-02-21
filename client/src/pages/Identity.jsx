@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import socket from "../socket";
 
 // DARK avatars
 import avatar1Dark from "../assets/avatars/dark/avatar1.svg";
@@ -53,27 +52,6 @@ function Identity() {
     document.body.classList.contains("light"),
   );
 
-  const [socketReady, setSocketReady] = useState(false);
-
-  useEffect(() => {
-    if (socket.connected) {
-      setSocketReady(true);
-    }
-
-    socket.on("connect", () => {
-      setSocketReady(true);
-    });
-
-    socket.on("disconnect", () => {
-      setSocketReady(false);
-    });
-
-    return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-    };
-  }, []);
-
   useEffect(() => {
     const observer = new MutationObserver(() => {
       setIsLight(document.body.classList.contains("light"));
@@ -95,80 +73,52 @@ function Identity() {
     setIndex((prev) => (prev === 0 ? avatars.length - 1 : prev - 1));
 
   const handleContinue = () => {
-  if (!name.trim()) return;
+    if (!name.trim()) return;
 
-  const selectedAvatar = index;
-  sessionStorage.setItem("name", name);
-  sessionStorage.setItem("avatar", selectedAvatar);
+    sessionStorage.setItem("name", name);
+    sessionStorage.setItem("avatar", index);
 
-  const proceed = () => {
-    socket.emit(
-      "createRoom",
-      {
-        name: name,
-        avatar: selectedAvatar,
-      },
-      (room) => {
-        navigate("/room", {
-          state: {
-            roomId: room.roomId,
-            players: room.players,
-            host: room.host,
-            playerName: name,
-            avatar: selectedAvatar,
-          },
-        });
-      },
-    );
+    navigate("/room");
   };
 
-  if (socket.connected) {
-    proceed();
-  } else {
-    socket.once("connect", proceed);
-  }
-};   // ⭐ THIS LINE FIXES EVERYTHING
+  return (
+    <section className="identity-page page">
+      <h1 className="identity-logo">KOTOBA</h1>
 
+      <p className="identity-label desc">Select your avatar</p>
 
-return (
-  <section className="identity-page page">
-    <h1 className="identity-logo">KOTOBA</h1>
+      <div className="avatar-section">
+        <button className="arrow-btn" onClick={prevAvatar}>
+          ‹
+        </button>
 
-    <p className="identity-label desc">Select your avatar</p>
+        <div className="avatar-card">
+          <img src={avatars[index]} alt="avatar" className="avatar-img" />
+        </div>
 
-    <div className="avatar-section">
-      <button className="arrow-btn" onClick={prevAvatar}>
-        ‹
-      </button>
-
-      <div className="avatar-card">
-        <img src={avatars[index]} alt="avatar" className="avatar-img" />
+        <button className="arrow-btn" onClick={nextAvatar}>
+          ›
+        </button>
       </div>
 
-      <button className="arrow-btn" onClick={nextAvatar}>
-        ›
+      <p className="identity-label desc">Enter your name</p>
+
+      <input
+        className="name-input-line"
+        value={name}
+        maxLength={16}
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <button
+        className="primary-btn"
+        onClick={handleContinue}
+        disabled={!name.trim()}
+      >
+        CONTINUE
       </button>
-    </div>
-
-    <p className="identity-label desc">Enter your name</p>
-
-    <input
-      className="name-input-line"
-      value={name}
-      maxLength={16}
-      onChange={(e) => setName(e.target.value)}
-    />
-
-    <button
-      className="primary-btn"
-      onClick={handleContinue}
-      disabled={!name.trim()}
-    >
-      CONTINUE
-    </button>
-  </section>
-);
+    </section>
+  );
 }
-
 
 export default Identity;
