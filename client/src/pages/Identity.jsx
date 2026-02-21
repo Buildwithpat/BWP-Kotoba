@@ -75,8 +75,10 @@ function Identity() {
   const handleContinue = () => {
     if (!name.trim()) return;
 
+    const selectedAvatar = index;
+
     sessionStorage.setItem("name", name);
-    sessionStorage.setItem("avatar", index);
+    sessionStorage.setItem("avatar", selectedAvatar);
 
     navigate("/room");
   };
