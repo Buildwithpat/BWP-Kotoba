@@ -7,15 +7,22 @@ const path = require("path");
 
 const wordsFile = path.join(__dirname, "words.txt");
 
-const words = new Set(
-  fs
-    .readFileSync(wordsFile, "utf-8")
-    .split("\n")
-    .map((w) => w.trim().toLowerCase())
-    .filter(Boolean),
-);
+let wordsCache = null;
 
-console.log("📚 Dictionary Loaded:", words.size, "words");
+function loadDictionary() {
+  if (!wordsCache) {
+    console.log("📘 Loading dictionary...");
+    wordsCache = new Set(
+      fs
+        .readFileSync(wordsFile, "utf-8")
+        .split("\n")
+        .map((w) => w.trim().toLowerCase())
+        .filter(Boolean),
+    );
+    console.log("✅ Dictionary ready:", wordsCache.size, "words");
+  }
+  return wordsCache;
+}
 
 /* =========================
    CATEGORY LOADER FUNCTION

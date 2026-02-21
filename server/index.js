@@ -185,7 +185,7 @@ io.on("connection", (socket) => {
         return;
       }
 
-      if (!datasets.words.has(lower)) {
+      if (!datasets.words.has || datasets.words.has(lower)) {
         socket.emit("wordRejected");
         return;
       }
@@ -453,3 +453,10 @@ const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log("Server running on port", PORT);
 });
+
+setInterval(
+  () => {
+    console.log("🫀 keeping server alive");
+  },
+  1000 * 60 * 10,
+);
