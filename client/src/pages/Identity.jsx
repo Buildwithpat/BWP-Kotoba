@@ -53,6 +53,27 @@ function Identity() {
     document.body.classList.contains("light"),
   );
 
+  const [socketReady, setSocketReady] = useState(false);
+
+  useEffect(() => {
+    if (socket.connected) {
+      setSocketReady(true);
+    }
+
+    socket.on("connect", () => {
+      setSocketReady(true);
+    });
+
+    socket.on("disconnect", () => {
+      setSocketReady(false);
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+    };
+  }, []);
+
   useEffect(() => {
     const observer = new MutationObserver(() => {
       setIsLight(document.body.classList.contains("light"));
@@ -110,43 +131,43 @@ function Identity() {
 
 
 return (
-    <section className="identity-page page">
-      <h1 className="identity-logo">KOTOBA</h1>
+  <section className="identity-page page">
+    <h1 className="identity-logo">KOTOBA</h1>
 
-      <p className="identity-label desc">Select your avatar</p>
+    <p className="identity-label desc">Select your avatar</p>
 
-      <div className="avatar-section">
-        <button className="arrow-btn" onClick={prevAvatar}>
-          ‹
-        </button>
+    <div className="avatar-section">
+      <button className="arrow-btn" onClick={prevAvatar}>
+        ‹
+      </button>
 
-        <div className="avatar-card">
-          <img src={avatars[index]} alt="avatar" className="avatar-img" />
-        </div>
-
-        <button className="arrow-btn" onClick={nextAvatar}>
-          ›
-        </button>
+      <div className="avatar-card">
+        <img src={avatars[index]} alt="avatar" className="avatar-img" />
       </div>
 
-      <p className="identity-label desc">Enter your name</p>
-
-      <input
-        className="name-input-line"
-        value={name}
-        maxLength={16}
-        onChange={(e) => setName(e.target.value)}
-      />
-
-      <button
-        className="primary-btn"
-        onClick={handleContinue}
-        disabled={!name.trim()}
-      >
-        CONTINUE
+      <button className="arrow-btn" onClick={nextAvatar}>
+        ›
       </button>
-    </section>
-  );
+    </div>
+
+    <p className="identity-label desc">Enter your name</p>
+
+    <input
+      className="name-input-line"
+      value={name}
+      maxLength={16}
+      onChange={(e) => setName(e.target.value)}
+    />
+
+    <button
+      className="primary-btn"
+      onClick={handleContinue}
+      disabled={!name.trim()}
+    >
+      CONTINUE
+    </button>
+  </section>
+);
 }
 
 
