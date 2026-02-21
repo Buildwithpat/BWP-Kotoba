@@ -78,11 +78,11 @@ function Identity() {
 
     const selectedAvatar = index;
 
+    socket.connect();
+
     // SAVE FIRST — ALWAYS
     sessionStorage.setItem("name", name);
     sessionStorage.setItem("avatar", selectedAvatar);
-    
-    socket.connect();
 
     // Then create room
     socket.emit(
