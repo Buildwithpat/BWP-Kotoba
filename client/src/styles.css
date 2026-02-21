@@ -1,0 +1,1806 @@
+@font-face {
+  font-family: "Satoshi";
+  src: url("./assets/fonts/Satoshi-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+:root {
+  --bg: #000000;
+  --text: #ffffff;
+  --grid: #3B3B3B;
+  --border: #303030;
+  --desc: rgba(255, 255, 255, 0.6);   /* ADD THIS */
+}
+
+.light {
+  --bg: #ffffff;
+  --text: #000000;
+  --grid: #c8c8c8;
+  --border: #000000;
+  --desc: rgba(0, 0, 0, 0.6);   /* ADD THIS */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kodchasan", sans-serif;
+  min-height: 100vh;
+}
+
+/* GRID BACKGROUND */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.header {
+  width: 100%;
+  padding: 32px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+.container {
+  width: 100%;
+  padding: 0 40px;
+}
+
+
+.right-section {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.icon-btn {
+  background: none;
+  border: 2px solid var(--border);
+  padding: 6px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+}
+
+.icon-btn:hover {
+  border: 2px solid var(--text);
+}
+
+.icon-btn svg {
+  height: 24px;
+  width: 24px;
+}
+
+.desc {
+  font-family: "Satoshi", sans-serif;
+  color: var(--desc);
+}
+
+.hero {
+  padding-top: 100px;  /* controlled spacing from header */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+}
+
+
+
+.hero-title {
+  font-size: clamp(64px, 10vw, 110px);
+  font-weight: 400;
+  letter-spacing: 6px;
+}
+
+
+.hero-tagline {
+  font-size: 24px;
+}
+
+.hero-sub {
+  font-size: 18px;
+}
+
+.primary-btn {
+  margin-top: 24px;
+  height: 80px;
+  width: 420px;           /* Controlled width */
+  max-width: 90%;         /* Mobile safe */
+  font-size: 22px;
+  font-family: "Kodchasan", sans-serif;
+  font-weight: 600;
+  letter-spacing: 2px;
+
+  background: #ffffff;
+  color: #000000;
+  border: 2px solid #ffffff;
+
+  cursor: pointer;
+  transition: all 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.primary-btn:hover {
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
+.light .primary-btn {
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
+}
+
+.light .primary-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  border: 2px solid #000000;
+}
+
+.about {
+  padding: 120px 40px 100px 40px;
+  text-align: center;
+}
+
+.about-title {
+  font-family: "Satoshi", sans-serif;
+  font-size: 40px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.about-sub {
+  max-width: 600px;
+  margin: 0 auto 80px auto;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;   /* was 40px */
+}
+
+
+.about-card {
+  background: #ffffff;
+  color: #000000;
+  padding: 28px;
+  text-align: left;
+  border: 2px solid transparent;
+  transition: all 200ms ease;
+}
+
+.about-card h3 {
+  font-family: "Satoshi", sans-serif;
+  font-weight: 500;
+  margin: 12px 0 8px 0;   /* spacing above and below */
+}
+
+
+.about-card:hover {
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
+
+.about-card p {
+  font-family: "Satoshi", sans-serif;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+
+
+.card-number {
+  width: 28px;
+  height: 28px;
+  background: #000000;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 200ms ease;
+}
+
+
+.about-card:hover .card-number {
+  background: #ffffff;
+  color: #000000;
+}
+
+
+.about-card:hover p {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 1000px) {
+  .about-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Logo and icons */
+
+.logo,
+.bwp {
+  height: 40px;
+  width: auto;
+  color: var(--text);
+}
+
+.bwp-link {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.bwp-link:hover {
+  opacity: 0.7;
+}
+
+.icon-btn {
+  background: none;
+  border: 2px solid var(--border);
+  padding: 6px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn img {
+  height: 24px;
+  width: 24px;
+}
+
+.icon-btn:hover {
+  border: 2px solid var(--text);
+}
+
+.about-note {
+  font-family: "Satoshi", sans-serif;
+  margin-top: 24px;
+  font-size: 18px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.light .about-note {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.light .about-card {
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
+}
+
+.light .about-card p {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.light .card-number {
+  background: #ffffff;
+  color: #000000;
+}
+
+.light .about-card:hover {
+  background: #ffffff;
+  color: #000000;
+  border: 2px solid #000000;
+}
+
+.light .about-card:hover p {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.light .about-card:hover .card-number {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Analytics */
+
+.analytics-section {
+  display: flex;
+  justify-content: center;
+  gap: 120px;
+  margin: 120px 0;
+}
+
+.analytics-card {
+  text-align: center;
+}
+
+.analytics-number {
+  font-size: 64px;
+  font-weight: 600;
+  color: white;
+}
+
+.analytics-label {
+  margin-top: 12px;
+  font-size: 18px;
+  color: #aaa;
+}
+
+body.light .analytics-number {
+  color: black;
+}
+
+body.light .analytics-label {
+  color: #555;
+}
+
+/* cursor */
+
+/* CUSTOM CURSOR */
+
+body {
+  cursor: url("./assets/cursors/cursor-dark.svg") 4 6, auto;
+}
+
+body.light {
+  cursor: url("./assets/cursors/cursor-light.svg") 4 6, auto;
+}
+
+/* Identity page */
+
+.identity {
+  min-height: calc(100vh - 104px); /* adjust based on header height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 100px;  /* real breathing space */
+}
+
+
+.identity-title {
+  font-size: clamp(70px, 9vw, 120px);
+  font-weight: 400;
+  letter-spacing: 6px;
+}
+
+
+.avatar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.avatar-image {
+  height: 100px;
+  width: auto;
+  transition: opacity 200ms ease;
+}
+
+.arrow-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.name-input {
+  width: 320px;
+  max-width: 90%;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font-family: "Kodchasan", sans-serif;
+}
+
+.identity-page {
+  min-height: calc(100vh - 104px); /* subtract header height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-top: 40px;
+  padding-bottom: 120px;  /* breathing space at bottom */
+
+  gap: 28px;  /* controlled vertical spacing */
+}
+
+
+.identity-label {
+  font-family: "Kodchasan", sans-serif;
+  font-size: 24px;
+}
+
+
+.identity .primary-btn {
+  margin-top: 40px;
+}
+
+.identity-page .primary-btn {
+  margin-top: 20px;
+}
+
+
+/* Big KOTOBA */
+.identity-logo {
+  font-size: clamp(48px, 7vw, 80px);
+  font-weight: 400;
+  letter-spacing: 6px;
+  margin-bottom: 10px;
+}
+
+
+/* Subtitle */
+.identity-sub {
+  font-family: "Satoshi", sans-serif;
+  font-size: 18px;
+  color: var(--desc);
+}
+
+/* Avatar section */
+.avatar-section {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-top: 10px;
+}
+
+/* Square card */
+.avatar-card {
+  width: 200px;
+  height: 200px;
+  border: 2px solid var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms ease;
+}
+
+/* Avatar image */
+.avatar-img {
+  height: 100px;
+  width: auto;
+}
+
+/* Arrows */
+.arrow-btn {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 28px;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+}
+
+.arrow-btn:hover {
+  opacity: 0.6;
+}
+
+/* Name input underline style */
+.name-input-line {
+  font-family: "Kodchasan", sans-serif;
+  font-size: 22px;
+  text-align: center;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--text);
+  width: 300px;
+  padding: 12px 0;
+  color: var(--text);
+  outline: none;
+}
+
+/* Room page */
+
+.room-page {
+  padding: 100px 40px 120px 40px;
+  text-align: center;
+}
+
+.room-logo {
+  font-size: 80px;
+  font-weight: 400;
+  letter-spacing: 6px;
+}
+
+.room-sub {
+  font-size: 22px;
+  margin-top: 12px;
+  font-family: "Kodchasan", sans-serif;
+}
+
+.room-top {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 60px;
+  flex-wrap: wrap;
+}
+
+/* ============================= */
+/* TOP CARDS (CREATE / JOIN)    */
+/* ============================= */
+
+.room-card {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  padding: 40px;
+  width: 420px;
+  transition: all 200ms ease;
+}
+
+/* DARK MODE HOVER */
+.room-card:hover {
+  border: 2px solid #ffffff;
+}
+
+/* LIGHT MODE → NO CARD HOVER EFFECT */
+.light .room-card:hover {
+  border: 2px solid #000000;
+}
+
+/* ============================= */
+/* BUTTONS INSIDE TOP CARDS     */
+/* ============================= */
+
+.room-btn {
+  margin-top: 24px;
+  height: 50px;
+  width: 180px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  border: 2px solid var(--border);
+  color: var(--text);
+
+  font-family: "Kodchasan", sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+
+/* DARK MODE BUTTON HOVER */
+.room-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  border: 2px solid #ffffff;
+}
+
+/* LIGHT MODE BUTTON STYLE */
+.light .room-btn {
+  border: 2px solid #000000;
+}
+
+/* LIGHT MODE BUTTON HOVER */
+.light .room-btn:hover {
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
+}
+
+/* ============================= */
+/* INPUT FIELD                   */
+/* ============================= */
+
+.room-input {
+  margin-top: 14px;
+  height: 45px;
+  width: 100%;
+  background: transparent;
+  border: 2px solid var(--border);
+  color: var(--text);
+  padding: 0 12px;
+  outline: none;
+  transition: all 200ms ease;
+}
+
+.room-input:focus {
+  border: 2px solid var(--text);
+}
+
+/* ============================= */
+/* DIVIDER                      */
+/* ============================= */
+
+.divider {
+  height: 2px;
+  background: #ffffff;
+  margin: 80px auto 40px auto;
+  width: 90%;
+}
+
+/* LIGHT MODE DIVIDER */
+.light .divider {
+  background: #000000;
+}
+
+/* ============================= */
+/* GAME MODES SECTION           */
+/* ============================= */
+
+.modes-title {
+  font-size: 28px;
+  margin-bottom: 40px;
+  font-family: "Kodchasan", sans-serif;
+}
+
+.modes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: center;
+}
+
+.mode-card {
+  width: 90%;
+  max-width: 1100px;
+  padding: 28px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  text-align: left;
+  transition: all 200ms ease;
+}
+
+/* BOTH THEMES — MODE CARDS HOVER */
+.mode-card:hover {
+  background: var(--text);
+  color: var(--bg);
+  border: 2px solid var(--text);
+}
+
+.mode-card:hover .desc {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.light .mode-card:hover .desc {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.mode-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 20px;
+  gap: 40px;
+}
+
+.mode-grid ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+/*  Lobby style */
+/* ============================= */
+/* LOBBY PAGE                    */
+/* ============================= */
+
+.lobby-page {
+  padding: 120px 40px 140px 40px;
+  text-align: center;
+}
+
+.lobby-logo {
+  font-size: 72px;
+  font-weight: 400;
+  letter-spacing: 6px;
+  margin-bottom: 60px;
+}
+
+/* ============================= */
+/* ROOM CODE CARD                */
+/* ============================= */
+
+.room-code-card {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 60px auto;
+  padding: 40px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  text-align: left;
+}
+
+.room-code-card h3 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  font-family: "Kodchasan", sans-serif;
+}
+
+.room-code-box {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 12px;
+}
+
+.room-code-box input {
+  flex: 1;
+  height: 50px;
+  padding: 0 16px;
+  font-size: 18px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+}
+
+.room-code-box button {
+  height: 50px;
+  padding: 0 24px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kodchasan", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.room-code-box button:hover {
+  background: var(--text);
+  color: var(--bg);
+  border: 2px solid var(--text);
+}
+
+/* ============================= */
+/* GRID BELOW                    */
+/* ============================= */
+
+.lobby-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+/* ============================= */
+/* PLAYERS PANEL                 */
+/* ============================= */
+
+.players-panel {
+  flex: 1;
+  min-width: 420px;
+  padding: 40px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  text-align: left;
+}
+
+.players-panel h3 {
+  font-size: 24px;
+  margin-bottom: 6px;
+  font-family: "Kodchasan", sans-serif;
+}
+
+
+
+/* Scrollbar styling */
+
+
+
+.player-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.player-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.player-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--text);
+}
+
+.player-name {
+  font-size: 20px;
+  font-weight: 600;
+  font-family: "Kodchasan", sans-serif;
+}
+
+.player-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.player-avatar img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+.player-status {
+  font-size: 16px;
+  opacity: 0.7;
+  transition: all 200ms ease;
+}
+
+.player-status.ready {
+  opacity: 1;
+  font-weight: 600;
+}
+
+/* READY button active state */
+.ready-active {
+  background: var(--text);
+  color: var(--bg);
+  border: 2px solid var(--text);
+}
+
+
+.host-badge {
+  font-size: 14px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+}
+
+/* ============================= */
+/* SETTINGS PANEL                */
+/* ============================= */
+
+/* ============================= */
+/* SETTINGS PANEL                */
+/* ============================= */
+
+/* ============================= */
+/* GAME SETTINGS PANEL           */
+/* ============================= */
+
+/* ============================= */
+/* SETTINGS PANEL                */
+/* ============================= */
+
+.settings-panel {
+  flex: 1;
+  min-width: 420px;
+  padding: 40px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  text-align: left;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.settings-panel h3 {
+  font-size: 28px;
+  margin-bottom: 35px;
+  font-family: "Kodchasan", sans-serif;
+  font-weight: 600;
+}
+
+/* ============================= */
+/* SETTING BLOCK                 */
+/* ============================= */
+
+.setting-block {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.setting-block label {
+  font-size: 14px;
+  opacity: 0.6;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+/* ============================= */
+/* CUSTOM SELECT DISPLAY         */
+/* ============================= */
+
+.select-display {
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+
+  border: 2px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+
+  font-family: "Kodchasan", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.select-display:hover {
+  border-color: var(--text);
+}
+
+/* Arrow */
+.arrow {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* ============================= */
+/* DROPDOWN OPTIONS              */
+/* ============================= */
+
+.select-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-top: none;
+
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.select-option {
+  padding: 14px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.select-option:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* ============================= */
+/* START BUTTON                  */
+/* ============================= */
+
+.settings-panel .primary-btn {
+  margin-top: auto;
+  align-self: center;
+
+  width: 80%;
+  max-width: 420px;
+
+  height: 60px;
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+
+
+.start-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.lobby-message {
+  margin: 30px auto;
+  padding: 18px 26px;
+  width: fit-content;
+  border: 2px solid var(--text);
+  font-family: "Kodchasan", sans-serif;
+  font-size: 16px;
+  animation: fadeInOut 2.5s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(6px); }
+  10% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.kick-btn {
+  margin-left: 14px;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+
+.kick-actions {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* =========================
+   KICK CONFIRM MODAL FIX
+========================= */
+
+
+
+
+
+.kick-confirm p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.kick-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.kick-actions .secondary-btn,
+.kick-actions .primary-btn {
+  width: 120px;
+}
+
+.remove-player {
+  margin-left: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 0.7;
+  transition: 0.2s ease;
+}
+
+.remove-player:hover {
+  opacity: 1;
+  color: var(--text);
+}
+
+.confirm-title {
+  font-size: 22px;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+/* ============================= */
+/* MODAL OVERLAY                 */
+/* ============================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* ============================= */
+/* CONFIRM CARD                  */
+/* ============================= */
+
+.confirm-card {
+  width: 380px;
+  padding: 40px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  text-align: center;
+}
+
+.confirm-title {
+  font-size: 22px;
+  margin-bottom: 30px;
+  font-family: "Kodchasan", sans-serif;
+  font-weight: 600;
+}
+
+/* Buttons container */
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Buttons */
+.confirm-btn {
+  width: 120px;
+  height: 50px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kodchasan", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.confirm-btn:hover {
+  border-color: var(--text);
+}
+
+/* YES button special */
+.confirm-btn.primary {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.confirm-btn.primary:hover {
+  opacity: 0.85;
+}
+
+
+.confirm-btn:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* ============================= */
+/* GAME PAGE                     */
+/* ============================= */
+
+.game-page {
+  padding: 60px 40px 100px 40px;
+  text-align: center;
+}
+
+/* ============================= */
+/* TOP SECTION                   */
+/* ============================= */
+
+/* ========================= */
+/* TOP SECTION */
+/* ========================= */
+
+.game-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  margin-top: 0px;   /* moved UP */
+}
+
+/* Avatar bigger */
+.game-avatar {
+  width: 100px;       /* increased size */
+  height: 100px;
+}
+
+/* Timer — SAME SIZE */
+.game-timer {
+  font-size: 48px;   /* NOT reduced */
+  font-weight: 600;
+  width: 100px;      /* fixed width so it doesn't move title */
+  text-align: right;
+}
+
+/* WORD DUEL */
+.game-title {
+  text-align: center;
+  font-size: 52px;   /* reduced only this */
+  letter-spacing: 4px;
+  line-height: 1;
+  margin-top: 20px;  /* moved UP */
+}
+
+.game-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+
+/* ============================= */
+/* WORD AREA                     */
+
+.word-area {
+  margin-top: 40px;
+  margin-bottom: 80px;
+  text-align: center;
+  position: relative;
+  cursor: text;
+
+  height: 120px; /* ⭐ prevents layout shift */
+}
+
+/* DISPLAY WORD */
+.word-display {
+  font-size: 96px;
+  font-weight: 600;
+  letter-spacing: 8px;
+
+  min-height: 120px; /* ⭐ matches input height */
+  line-height: 120px;
+
+  transition: opacity 0.4s ease;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.word-input:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* INPUT */
+.word-input {
+  position: absolute;   /* ⭐ overlay input */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+
+  font-size: 96px;
+  font-weight: 600;
+  letter-spacing: 8px;
+  line-height: 120px;
+
+  text-align: center;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  color: white;
+  caret-color: transparent;
+
+  font-family: inherit;
+}
+
+/* Shake animation */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.35s ease;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: all 0.35s ease;
+}
+
+/* Rule text */
+.game-rule {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+/* ============================= */
+/* GAME GRID                     */
+/* ============================= */
+
+/* ===================================== */
+/* GAME GRID (same width feel as lobby)  */
+/* ===================================== */
+
+.game-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 100px;
+
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* ===================================== */
+/* GENERIC GAME CARD                     */
+/* ===================================== */
+
+.game-card {
+  border: 2px solid var(--border);
+  background: var(--bg);
+  padding: 35px;
+
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ===================================== */
+/* PLAYERS CARD                          */
+/* ===================================== */
+
+.players-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.round-label {
+  font-size: 22px;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+/* Scroll container */
+.players-list {
+  flex: 1;
+  min-height: 0;              /* CRITICAL FOR SCROLL */
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  padding-right: 8px;
+  padding-top: 10px;
+}
+
+/* Each player row */
+.player-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.player-item.eliminated {
+  opacity: 0.5;
+  filter: grayscale(100%);
+}
+
+.player-name {
+  font-size: 19px;
+}
+
+.turn-arrow {
+  font-size: 22px;
+  opacity: 0.85;
+}
+
+/* ===================================== */
+/* CHAT CARD                             */
+/* ===================================== */
+
+.chat-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Title */
+.chat-card h3 {
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+/* Divider */
+.chat-divider {
+  height: 2px;
+  background: var(--border);
+  margin: 18px 0 25px 0;
+}
+
+/* Scroll area */
+.chat-list {
+  flex: 1;
+  min-height: 0;              /* CRITICAL FOR SCROLL */
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Message block */
+.chat-message {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.chat-name {
+  font-weight: 600;
+  display: inline;
+}
+
+.chat-text {
+  display: inline;
+  opacity: 0.85;
+  white-space: pre-wrap;
+}
+
+
+
+/* ===================================== */
+/* CHAT INPUT                            */
+/* ===================================== */
+
+.chat-input-wrapper {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+}
+
+.chat-input {
+  flex: 1;
+  height: 52px;
+  padding: 0 16px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kodchasan", sans-serif;
+  outline: none;
+}
+
+.chat-input:focus {
+  border-color: var(--text);
+}
+
+.chat-send-btn {
+  width: 90px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  display: none;
+}
+
+.chat-card {
+  text-align: left;   /* force left alignment */
+}
+
+.chat-list {
+  text-align: left;
+  align-items: flex-start;
+}
+
+/* ===================================== */
+/* MOBILE FIX                            */
+/* ===================================== */
+
+@media (max-width: 768px) {
+  .game-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .chat-send-btn {
+    display: block;
+  }
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+
+.players-list::-webkit-scrollbar,
+.chat-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.players-list::-webkit-scrollbar-track,
+.chat-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.players-list::-webkit-scrollbar-thumb,
+.chat-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}
+
+.players-list::-webkit-scrollbar-thumb:hover,
+.chat-list::-webkit-scrollbar-thumb:hover {
+  background: var(--text);
+}
+
+/* Game Complete */
+
+.game-complete-page {
+  text-align: center;
+  padding-top: 120px;
+}
+
+/* ======================= */
+/* TITLE */
+/* ======================= */
+
+.complete-title {
+  font-size: 60px;
+  letter-spacing: 2px;
+  margin-bottom: 50px;
+}
+
+/* ======================= */
+/* WINNER */
+/* ======================= */
+
+.winner-section {
+  margin-bottom: 60px;
+}
+
+.winner-label {
+  opacity: 0.7;
+  margin-bottom: 15px;
+  font-size: 32px;
+}
+
+.winner-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+.winner-avatar {
+  width: 100px;
+  height: 100px;
+}
+
+.winner-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.winner-name {
+  font-size: 80px;
+  letter-spacing: 3px;
+}
+
+/* ======================= */
+/* CARDS */
+/* ======================= */
+
+.complete-card {
+  border: 2px solid var(--border);
+  background: var(--bg);
+  padding: 35px;
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+  height: 520px; /* same as game cards */
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 32px;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+}
+
+/* ======================= */
+/* SCOREBOARD */
+/* ======================= */
+
+.score-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.score-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.score-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.score-list::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 10px;
+}
+
+.score-list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text);
+}
+
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.score-left {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.score-rank {
+  opacity: 0.6;
+  width: 20px;
+}
+
+.score-name {
+  font-size: 32px;
+}
+
+.score-points {
+  font-size: 24px;
+}
+
+/* Scoreboard scroll */
+.scoreboard-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* Chrome / Edge */
+.scoreboard-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scoreboard-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scoreboard-list::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 10px;
+}
+
+.scoreboard-list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text);
+}
+
+
+/* ======================= */
+/* MATCH STATS */
+/* ======================= */
+
+.stats-card {
+  height: auto;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+/* LEFT SIDE (Game Mode, Longest Word etc) */
+.stat-row span:first-child {
+  font-size: 24px;   /* increased like you wanted */
+  font-weight: 600;
+}
+
+.stat-row span:last-child {
+  font-size: 24px;
+  opacity: 0.85;
+}
+
+/* ======================= */
+/* BUTTONS */
+/* ======================= */
+
+.complete-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 100px;
+}
+
+.complete-buttons button {
+  width: 220px;
+  height: 60px;
+  letter-spacing: 2px;
+}
+
+.player-item.eliminated {
+  opacity: 0.4;
+}
+
+/* Animations */
+
+/* ================= TURN HIGHLIGHT ================= */
+
+@keyframes turnPulse {
+  0% {
+    background: rgba(0, 200, 255, 0);
+  }
+  50% {
+    background: rgba(0, 200, 255, 0.12);
+  }
+  100% {
+    background: rgba(0, 200, 255, 0);
+  }
+}
+
+.player-item.active-turn {
+  animation: turnPulse 1.4s ease;
+  border-radius: 8px;
+}
+
+/* ================= TIMER WARNING ================= */
+
+@keyframes timerWarning {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.game-timer.warning {
+  color: #ff3b3b;
+  animation: timerWarning 0.6s infinite;
+}
+
+/* ================= PAGE TRANSITION ================= */
+
+.page {
+  animation: pageFade 0.35s ease;
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
