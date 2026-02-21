@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import socket from "../socket";
 
 // DARK avatars
 import avatar1Dark from "../assets/avatars/dark/avatar1.svg";
