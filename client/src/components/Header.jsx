@@ -110,7 +110,7 @@ function Header({ theme, toggleTheme }) {
           href=""
           target="_blank"
           rel="noopener noreferrer"
-          className="bwp-link"
+          className="bwp-link hide-mobile"
         >
           <svg
             className="bwp"

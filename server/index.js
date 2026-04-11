@@ -14,8 +14,11 @@ let analytics = {
 
 const app = express();
 app.use(cors({
-  origin:
-  "https://bwp-kotoba.vercel.app",
+  origin: [
+    "https://bwp-kotoba.vercel.app", 
+    "http://localhost:3000",   // ⚡ Add this for React local dev
+    "http://localhost:5173"    // ⚡ Add this if you use Vite
+  ],
   methods: ["GET", "POST"],
   credentials: true,
 }));
@@ -29,7 +32,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: ["https://bwp-kotoba.vercel.app"],
+    origin: origin: ["https://bwp-kotoba.vercel.app", "http://localhost:3000"],
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -41,7 +44,17 @@ const ROUND_TIMERS = [40, 35, 30, 25, 20, 15];
 const SPEED_TIMERS = [20, 18, 16, 14, 12, 10];
 const ROUND_LENGTHS = [3, 4, 5, 6, 7, 8];
 
-const CATEGORY_LIST = ["animals", "cities", "countries", "fruits", "sports"];
+const CATEGORY_LIST = [
+  "animals", 
+  "carBrands", 
+  "cities", 
+  "countries", 
+  "elements", 
+  "fruits", 
+  "programmingLanguages", 
+  "spokenLanguages", 
+  "sports"
+];
 
 const rooms = {};
 
@@ -166,44 +179,61 @@ io.on("connection", (socket) => {
 
     /* ===== CATEGORY ===== */
 
+    /* ===== WORD VALIDATION LOGIC ===== */
+
     if (room.game.mode === "Category Rush") {
       const cat = room.game.category;
-      if (!datasets[cat].has(lower)) {
+
+      // Accessing through datasets.datasets because of how loader.js exports it
+      const categorySet = datasets.datasets[cat];
+
+      if (!categorySet || !categorySet.has(lower)) {
+        console.log(`❌ Rejected: ${word} is not in ${cat}`);
         socket.emit("wordRejected");
         return;
       }
     } else {
-      /* ===== WORD MODES ===== */
-      const len = ROUND_LENGTHS[room.game.currentRound];
+      /* ===== WORD DUEL / SPEED RUN ===== */
+      const len =
+        ROUND_LENGTHS[
+          Math.min(room.game.currentRound, ROUND_LENGTHS.length - 1)
+        ];
 
+      // 1. Length Check
       if (clean.length < len) {
         socket.emit("wordRejected");
         return;
       }
 
+      // 2. Starting Letter Check
       if (!clean.startsWith(room.game.currentLetter)) {
         socket.emit("wordRejected");
         return;
       }
 
+      // 3. Dictionary Check
+      // Note: loadDictionary() is exported specifically, so we call it directly
       if (!loadDictionary().has(lower)) {
+        console.log(`❌ Rejected: ${word} not in dictionary`);
         socket.emit("wordRejected");
         return;
       }
 
+      // Update the letter for the next person
       room.game.currentLetter = clean.slice(-1);
     }
 
+    // If it passes all checks:
     room.game.usedWords.add(clean);
 
     // ===== SCORE CALCULATION =====
 
-const remaining = room.game.currentTimer;
-const speedBonus = Math.max(1, Math.floor(remaining / 2));
+    const remaining = room.game.currentTimer;
+    const speedBonus = Math.max(1, Math.floor(remaining / 2));
 
-const points = 2 + speedBonus;
+    const points = 2 + speedBonus;
 
-player.score += points;
+    player.score += points;
 
     io.to(roomId).emit("wordAccepted", {
       word: clean,
@@ -326,7 +356,7 @@ function startTurn(roomId) {
   }
 
   /* ================= GET TIMER VALUE ================= */
-
+  // Speed Run logic: Use SPEED_TIMERS, otherwise use ROUND_TIMERS
   let timer =
     room.game.mode === "Speed Run"
       ? SPEED_TIMERS[Math.min(round, SPEED_TIMERS.length - 1)]
@@ -335,34 +365,39 @@ function startTurn(roomId) {
   /* ================= SAVE TIMER FOR SCORING ================= */
   room.game.currentTimer = timer;
 
-  /* ================= CATEGORY MODE ================= */
-  if (room.game.mode === "Category Rush") {
-    room.game.category =
-      CATEGORY_LIST[Math.floor(Math.random() * CATEGORY_LIST.length)];
-  }
-
-  /* ================= SEND TURN DATA ================= */
-  io.to(roomId).emit("turnStarted", {
+  /* ================= MODE-SPECIFIC LOGIC ================= */
+  let turnPayload = {
     playerId: player.id,
     timer,
     round: round + 1,
-    wordLength: ROUND_LENGTHS[Math.min(round, ROUND_LENGTHS.length - 1)],
-    category: room.game.category || null,
     mode: room.game.mode,
-  });
+  };
+
+  if (room.game.mode === "Category Rush") {
+    // Pick a category if one isn't set, or pick a new one for the new round
+    room.game.category =
+      CATEGORY_LIST[Math.floor(Math.random() * CATEGORY_LIST.length)];
+    turnPayload.category = room.game.category;
+  } else {
+    // For Word Duel and Speed Run, we MUST send the current letter and required length
+    turnPayload.currentLetter = room.game.currentLetter;
+    turnPayload.wordLength =
+      ROUND_LENGTHS[Math.min(round, ROUND_LENGTHS.length - 1)];
+  }
+
+  /* ================= SEND TURN DATA ================= */
+  // We send the turnPayload which now contains mode-specific data
+  io.to(roomId).emit("turnStarted", turnPayload);
 
   /* ================= START TIMER LOOP ================= */
   room.game.timerInterval = setInterval(() => {
     timer--;
-
-    // ⭐ VERY IMPORTANT — keep updating remaining time
     room.game.currentTimer = timer;
 
     io.to(roomId).emit("timerUpdate", timer);
 
     if (timer <= 0) {
       clearInterval(room.game.timerInterval);
-
       player.eliminated = true;
 
       io.to(roomId).emit("playerEliminated", {
@@ -419,11 +454,11 @@ function nextTurn(roomId) {
     analytics.totalGames += 1;
     analytics.totalRounds += room.game.currentRound + 1;
 
-    new GameStats({
-      players: room.players.length,
-      rounds: room.game.currentRound + 1,
-      mode: room.game.mode,
-    }).save();
+    // new GameStats({
+    //   players: room.players.length,
+    //   rounds: room.game.currentRound + 1,
+    //   mode: room.game.mode,
+    // }).save();
 
     /* ================= SEND GAME END ================= */
 

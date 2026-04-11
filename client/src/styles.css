@@ -6,13 +6,12 @@
   font-display: swap;
 }
 
-
 :root {
   --bg: #000000;
   --text: #ffffff;
-  --grid: #3B3B3B;
+  --grid: #3b3b3b;
   --border: #303030;
-  --desc: rgba(255, 255, 255, 0.6);   /* ADD THIS */
+  --desc: rgba(255, 255, 255, 0.6); /* ADD THIS */
 }
 
 .light {
@@ -20,7 +19,7 @@
   --text: #000000;
   --grid: #c8c8c8;
   --border: #000000;
-  --desc: rgba(0, 0, 0, 0.6);   /* ADD THIS */
+  --desc: rgba(0, 0, 0, 0.6); /* ADD THIS */
 }
 
 * {
@@ -57,13 +56,10 @@ body::before {
   align-items: center;
 }
 
-
-
 .container {
   width: 100%;
   padding: 0 40px;
 }
-
 
 .right-section {
   display: flex;
@@ -98,7 +94,7 @@ body::before {
 }
 
 .hero {
-  padding-top: 100px;  /* controlled spacing from header */
+  padding-top: 100px; /* controlled spacing from header */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -106,14 +102,11 @@ body::before {
   gap: 24px;
 }
 
-
-
 .hero-title {
   font-size: clamp(64px, 10vw, 110px);
   font-weight: 400;
   letter-spacing: 6px;
 }
-
 
 .hero-tagline {
   font-size: 24px;
@@ -126,8 +119,8 @@ body::before {
 .primary-btn {
   margin-top: 24px;
   height: 80px;
-  width: 420px;           /* Controlled width */
-  max-width: 90%;         /* Mobile safe */
+  width: 420px; /* Controlled width */
+  max-width: 90%; /* Mobile safe */
   font-size: 22px;
   font-family: "Kodchasan", sans-serif;
   font-weight: 600;
@@ -143,7 +136,6 @@ body::before {
   align-items: center;
   justify-content: center;
 }
-
 
 .primary-btn:hover {
   background: #000000;
@@ -183,9 +175,8 @@ body::before {
 .about-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 28px;   /* was 40px */
+  gap: 28px; /* was 40px */
 }
-
 
 .about-card {
   background: #ffffff;
@@ -199,9 +190,8 @@ body::before {
 .about-card h3 {
   font-family: "Kodchasan", sans-serif;
   font-weight: 500;
-  margin: 12px 0 8px 0;   /* spacing above and below */
+  margin: 12px 0 8px 0; /* spacing above and below */
 }
-
 
 .about-card:hover {
   background: #000000;
@@ -209,13 +199,10 @@ body::before {
   border: 2px solid #ffffff;
 }
 
-
 .about-card p {
   font-family: "Satoshi", sans-serif;
   color: rgba(0, 0, 0, 0.6);
 }
-
-
 
 .card-number {
   width: 28px;
@@ -231,12 +218,10 @@ body::before {
   transition: all 200ms ease;
 }
 
-
 .about-card:hover .card-number {
   background: #ffffff;
   color: #000000;
 }
-
 
 .about-card:hover p {
   color: rgba(255, 255, 255, 0.6);
@@ -372,11 +357,15 @@ body.light .analytics-label {
 /* CUSTOM CURSOR */
 
 body {
-  cursor: url("./assets/cursors/cursor-dark.svg") 4 6, auto;
+  cursor:
+    url("./assets/cursors/cursor-dark.svg") 4 6,
+    auto;
 }
 
 body.light {
-  cursor: url("./assets/cursors/cursor-light.svg") 4 6, auto;
+  cursor:
+    url("./assets/cursors/cursor-light.svg") 4 6,
+    auto;
 }
 
 /* Identity page */
@@ -387,16 +376,14 @@ body.light {
   flex-direction: column;
   align-items: center;
   padding-top: 40px;
-  padding-bottom: 100px;  /* real breathing space */
+  padding-bottom: 100px; /* real breathing space */
 }
-
 
 .identity-title {
   font-size: clamp(70px, 9vw, 120px);
   font-weight: 400;
   letter-spacing: 6px;
 }
-
 
 .avatar-wrapper {
   display: flex;
@@ -429,24 +416,26 @@ body.light {
 }
 
 .identity-page {
-  min-height: calc(100vh - 104px); /* subtract header height */
+  /* Use 100dvh to account for mobile browser address bars */
+  height: calc(100dvh - 104px);
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
 
-  padding-top: 40px;
-  padding-bottom: 120px;  /* breathing space at bottom */
+  /* distribute space evenly so it fits one screen */
+  justify-content: space-evenly;
 
-  gap: 28px;  /* controlled vertical spacing */
+  /* remove the large fixed paddings and gap */
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden; /* This is the hard lock for scrolling */
 }
-
 
 .identity-label {
   font-family: "Kodchasan", sans-serif;
   font-size: 24px;
 }
-
 
 .identity .primary-btn {
   margin-top: 40px;
@@ -456,7 +445,6 @@ body.light {
   margin-top: 20px;
 }
 
-
 /* Big KOTOBA */
 .identity-logo {
   font-size: clamp(48px, 7vw, 80px);
@@ -464,7 +452,6 @@ body.light {
   letter-spacing: 6px;
   margin-bottom: 10px;
 }
-
 
 /* Subtitle */
 .identity-sub {
@@ -529,12 +516,18 @@ body.light {
 /* Room page */
 
 .room-page {
-  padding: 100px 40px 120px 40px;
+  /* Reduced top padding for mobile */
+  padding: 40px 20px 80px 20px;
   text-align: center;
+  min-height: 100dvh;
 }
 
 .room-logo {
-  font-size: 80px;
+  font-size: clamp(
+    40px,
+    10vw,
+    80px
+  ); /* Scales logo size based on screen width */
   font-weight: 400;
   letter-spacing: 6px;
 }
@@ -548,9 +541,10 @@ body.light {
 .room-top {
   display: flex;
   justify-content: center;
-  gap: 40px;
-  margin-top: 60px;
-  flex-wrap: wrap;
+  gap: 20px; /* Reduced gap */
+  margin-top: 40px;
+  flex-direction: row;
+  flex-wrap: wrap; /* Allows stacking on small screens */
 }
 
 /* ============================= */
@@ -560,8 +554,9 @@ body.light {
 .room-card {
   background: var(--bg);
   border: 2px solid var(--border);
-  padding: 40px;
-  width: 420px;
+  padding: 30px;
+  width: 100%; /* Full width on mobile */
+  max-width: 420px; /* Locks size on desktop */
   transition: all 200ms ease;
 }
 
@@ -599,7 +594,6 @@ body.light {
   cursor: pointer;
   transition: all 200ms ease;
 }
-
 
 /* DARK MODE BUTTON HOVER */
 .room-btn:hover {
@@ -647,7 +641,7 @@ body.light {
 .divider {
   height: 2px;
   background: #ffffff;
-  margin: 80px auto 40px auto;
+  margin: 40px auto; /* Reduced margin */
   width: 90%;
 }
 
@@ -702,7 +696,7 @@ body.light {
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-top: 20px;
-  gap: 40px;
+  gap: 20px;
 }
 
 .mode-grid ul {
@@ -716,15 +710,16 @@ body.light {
 /* ============================= */
 
 .lobby-page {
-  padding: 120px 40px 140px 40px;
+  padding: 60px 20px 100px 20px; /* Reduced padding for better mobile fit */
   text-align: center;
+  min-height: 100dvh;
 }
 
 .lobby-logo {
-  font-size: 72px;
+  font-size: clamp(40px, 8vw, 72px); /* Responsive font size */
   font-weight: 400;
   letter-spacing: 6px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 /* ============================= */
@@ -748,33 +743,37 @@ body.light {
 }
 
 .room-code-box {
-  display: flex;
-  align-items: center;
-  gap: 0;
+  display: flex !important;
+  flex-direction: row !important; /* Forces side-by-side no matter what */
+  width: 100%;
+  max-width: 100%;
   margin-bottom: 12px;
+  box-sizing: border-box;
 }
 
 .room-code-box input {
   flex: 1;
+  min-width: 0; /* ⚡ THE FIX: This stops the input from pushing the button out */
   height: 50px;
-  padding: 0 16px;
-  font-size: 18px;
+  padding: 0 12px;
+  font-size: 16px;
   border: 2px solid var(--border);
+  border-right: none; /* Merges them together */
   background: var(--bg);
   color: var(--text);
   outline: none;
 }
 
 .room-code-box button {
+  width: 80px; /* Fixed width for the button */
   height: 50px;
-  padding: 0 24px;
   border: 2px solid var(--border);
   background: var(--bg);
   color: var(--text);
   font-family: "Kodchasan", sans-serif;
-  font-weight: 500;
+  font-size: 14px;
   cursor: pointer;
-  transition: all 200ms ease;
+  white-space: nowrap;
 }
 
 .room-code-box button:hover {
@@ -790,9 +789,10 @@ body.light {
 .lobby-grid {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 30px;
   max-width: 1100px;
   margin: 0 auto;
+  flex-direction: row; /* Default desktop row */
   flex-wrap: wrap;
 }
 
@@ -815,11 +815,7 @@ body.light {
   font-family: "Kodchasan", sans-serif;
 }
 
-
-
 /* Scrollbar styling */
-
-
 
 .player-left {
   display: flex;
@@ -832,7 +828,6 @@ body.light {
   align-items: center;
   gap: 10px;
 }
-
 
 .player-dot {
   width: 12px;
@@ -881,7 +876,6 @@ body.light {
   color: var(--bg);
   border: 2px solid var(--text);
 }
-
 
 .host-badge {
   font-size: 14px;
@@ -932,8 +926,9 @@ body.light {
 .setting-block {
   display: flex;
   flex-direction: column;
-  margin-bottom: 32px;
+  margin-bottom: 24px; /* Reduced slightly from 32px for tighter mobile feel */
   position: relative;
+  width: 100%;
 }
 
 .setting-block label {
@@ -995,6 +990,11 @@ body.light {
   display: flex;
   flex-direction: column;
   z-index: 100;
+
+  /* ADD THESE FOR BETTER MOBILE FEEL */
+  max-height: 200px;
+  overflow-y: auto; /* Scrollable if there are many options */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Adds depth to the dropdown */
 }
 
 .select-option {
@@ -1002,6 +1002,16 @@ body.light {
   font-size: 16px;
   cursor: pointer;
   transition: 0.15s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+}
+
+.select-option:last-child {
+  border-bottom: none;
+}
+
+.select-option:active {
+  background: var(--text);
+  color: var(--bg);
 }
 
 .select-option:hover {
@@ -1025,8 +1035,6 @@ body.light {
   letter-spacing: 2px;
 }
 
-
-
 .start-wrapper {
   display: flex;
   justify-content: center;
@@ -1044,10 +1052,20 @@ body.light {
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: translateY(6px); }
-  10% { opacity: 1; transform: translateY(0); }
-  80% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .kick-btn {
@@ -1059,8 +1077,6 @@ body.light {
   cursor: pointer;
 }
 
-
-
 .kick-actions {
   display: flex;
   gap: 20px;
@@ -1070,10 +1086,6 @@ body.light {
 /* =========================
    KICK CONFIRM MODAL FIX
 ========================= */
-
-
-
-
 
 .kick-confirm p {
   font-size: 20px;
@@ -1183,7 +1195,6 @@ body.light {
   opacity: 0.85;
 }
 
-
 .confirm-btn:hover {
   background: var(--text);
   color: var(--bg);
@@ -1210,31 +1221,32 @@ body.light {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 50px;
-  margin-top: 0px;   /* moved UP */
+  width: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
 }
 
 /* Avatar bigger */
 .game-avatar {
-  width: 100px;       /* increased size */
+  width: 100px; /* increased size */
   height: 100px;
 }
 
 /* Timer — SAME SIZE */
 .game-timer {
-  font-size: 48px;   /* NOT reduced */
+  font-size: 48px; /* NOT reduced */
   font-weight: 600;
-  width: 100px;      /* fixed width so it doesn't move title */
+  width: 100px; /* fixed width so it doesn't move title */
   text-align: right;
 }
 
 /* WORD DUEL */
 .game-title {
   text-align: center;
-  font-size: 52px;   /* reduced only this */
+  font-size: 52px; /* reduced only this */
   letter-spacing: 4px;
   line-height: 1;
-  margin-top: 20px;  /* moved UP */
+  margin-top: 20px; /* moved UP */
 }
 
 .game-avatar img {
@@ -1242,7 +1254,6 @@ body.light {
   height: 100%;
   border-radius: 50%;
 }
-
 
 /* ============================= */
 /* WORD AREA                     */
@@ -1279,7 +1290,7 @@ body.light {
 
 /* INPUT */
 .word-input {
-  position: absolute;   /* ⭐ overlay input */
+  position: absolute; /* ⭐ overlay input */
   top: 0;
   left: 0;
   width: 100%;
@@ -1304,11 +1315,21 @@ body.light {
 
 /* Shake animation */
 @keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-6px); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  50% {
+    transform: translateX(6px);
+  }
+  75% {
+    transform: translateX(-6px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .shake {
@@ -1346,7 +1367,6 @@ body.light {
   margin-right: auto;
 }
 
-
 /* ===================================== */
 /* GENERIC GAME CARD                     */
 /* ===================================== */
@@ -1360,7 +1380,6 @@ body.light {
   display: flex;
   flex-direction: column;
 }
-
 
 /* ===================================== */
 /* PLAYERS CARD                          */
@@ -1380,7 +1399,7 @@ body.light {
 /* Scroll container */
 .players-list {
   flex: 1;
-  min-height: 0;              /* CRITICAL FOR SCROLL */
+  min-height: 0; /* CRITICAL FOR SCROLL */
   overflow-y: auto;
 
   display: flex;
@@ -1440,7 +1459,7 @@ body.light {
 /* Scroll area */
 .chat-list {
   flex: 1;
-  min-height: 0;              /* CRITICAL FOR SCROLL */
+  min-height: 0; /* CRITICAL FOR SCROLL */
   overflow-y: auto;
   padding-right: 8px;
 }
@@ -1462,8 +1481,6 @@ body.light {
   opacity: 0.85;
   white-space: pre-wrap;
 }
-
-
 
 /* ===================================== */
 /* CHAT INPUT                            */
@@ -1500,27 +1517,12 @@ body.light {
 }
 
 .chat-card {
-  text-align: left;   /* force left alignment */
+  text-align: left; /* force left alignment */
 }
 
 .chat-list {
   text-align: left;
   align-items: flex-start;
-}
-
-/* ===================================== */
-/* MOBILE FIX                            */
-/* ===================================== */
-
-@media (max-width: 768px) {
-  .game-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .chat-send-btn {
-    display: block;
-  }
 }
 
 /* ===== CUSTOM SCROLLBAR ===== */
@@ -1706,7 +1708,6 @@ body.light {
   background-color: var(--text);
 }
 
-
 /* ======================= */
 /* MATCH STATS */
 /* ======================= */
@@ -1724,7 +1725,7 @@ body.light {
 
 /* LEFT SIDE (Game Mode, Longest Word etc) */
 .stat-row span:first-child {
-  font-size: 24px;   /* increased like you wanted */
+  font-size: 24px; /* increased like you wanted */
   font-weight: 600;
 }
 
@@ -1778,9 +1779,15 @@ body.light {
 /* ================= TIMER WARNING ================= */
 
 @keyframes timerWarning {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .game-timer.warning {
@@ -1802,5 +1809,368 @@ body.light {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ===================================== */
+/* MOBILE FIX                            */
+/* ===================================== */
+
+@media (max-width: 768px) {
+  .game-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .chat-send-btn {
+    display: block;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 16px 20px; /* Reduce large padding to give more room */
+  }
+
+  .logo {
+    width: 60px; /* Scale down the OTO logo */
+    height: auto;
+  }
+
+  .right-section {
+    gap: 10px; /* Tighten the space between icons */
+  }
+
+  .bwp {
+    width: 60px; /* Scale down the BWP logo */
+    height: auto;
+  }
+
+  .icon-btn svg {
+    width: 20px; /* Make utility icons slightly smaller */
+    height: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .identity-logo {
+    font-size: 2.5rem; /* Shrink logo slightly */
+    margin-top: 20px;
+  }
+
+  .avatar-card {
+    width: 150px; /* Scale down the avatar box */
+    height: 150px;
+  }
+
+  .avatar-img {
+    width: 80%;
+  }
+
+  .identity-label {
+    margin: 5px 0;
+    font-size: 0.9rem;
+  }
+
+  .name-input-line {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+
+  .primary-btn {
+    width: 80%;
+    padding: 12px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .room-page {
+    padding-top: 20px;
+  }
+
+  .room-top {
+    flex-direction: column; /* Force vertical stack for Create/Join */
+    align-items: center;
+  }
+
+  .mode-grid {
+    grid-template-columns: 1fr; /* Stack the list items vertically */
+    gap: 10px;
+  }
+
+  .mode-card {
+    padding: 20px;
+  }
+}
+
+/* --- PLACE THIS AT THE VERY BOTTOM OF YOUR CSS FILE --- */
+@media (max-width: 850px) {
+  .lobby-page {
+    padding: 20px 15px 60px 15px; /* Tighter padding for mobile */
+  }
+
+  .lobby-logo {
+    margin-bottom: 24px;
+  }
+
+  .lobby-grid {
+    flex-direction: column !important; /* Forces the stack */
+    align-items: center;
+    gap: 20px;
+  }
+
+  .players-panel, 
+  .settings-panel {
+    width: 100%;
+    min-width: 0 !important; /* ⚡ CRITICAL: Kills the 420px desktop width */
+    max-width: 100%;
+    padding: 20px; /* Reduces inner spacing */
+    box-sizing: border-box;
+  }
+
+  .room-code-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+
+  .room-code-box {
+    display: flex;
+    flex-direction: row !important; /* Force side-by-side */
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .room-code-box input {
+    border-right: 2px solid var(--border); /* Put border back if stacked */
+  }
+
+  /* Compact player list for mobile */
+  .player-item {
+    padding: 10px 0;
+  }
+
+  .player-name {
+    font-size: 14px;
+  }
+
+  /* Make sure the Start/Ready button fits the width */
+  .settings-panel .primary-btn {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 20px;
+  }
+}
+
+/* --- MOBILE CHAT DRAWER --- */
+/* --- MOBILE GAME SCREEN OPTIMIZATION --- */
+
+@media (max-width: 768px) {
+  /* 1. Header Fix: Prevents elements from smashing together */
+  .game-top {
+  display: grid !important;
+  /* ⚡ This creates 3 slots: 60px on sides, and the title takes the middle */
+  grid-template-columns: 60px 1fr 60px !important; 
+  align-items: center !important;
+  width: 100% !important;
+  padding: 10px 15px !important;
+  box-sizing: border-box !important;
+}
+
+.game-avatar {
+  width: 40px !important; /* Scaled down slightly for better geometry */
+  height: 40px !important;
+  justify-self: start !important; /* Pins to far left */
+  display: flex;
+  align-items: center;
+}
+
+.game-avatar img {
+  width: 100% !important;
+  height: auto;
+}
+
+.game-title {
+  flex: none !important; 
+  justify-self: center !important; /* ⚡ Centers perfectly relative to the screen */
+  text-align: center !important;
+  font-size: 0.95rem !important; 
+  white-space: nowrap !important;
+  overflow: visible !important;
+  margin: 0 !important;
+}
+
+.game-timer {
+  width: auto !important;
+  min-width: 60px; /* Matches the left column width for perfect balance */
+  font-size: 1.4rem !important;
+  text-align: right !important;
+  font-weight: 700;
+  justify-self: end !important; /* Pins to far right */
+}
+
+  /* 2. Layout Stacking */
+  .game-grid {
+    display: block; 
+  }
+
+  /* 3. Chat Drawer Logic */
+  .chat-card {
+    position: fixed;
+    bottom: -100%; /* Hidden off-screen */
+    left: 0;
+    width: 100%;
+    height: 80vh;
+    z-index: 1000;
+    transition: bottom 0.3s ease-in-out;
+    background: var(--bg);
+    border-top: 4px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .chat-card.open {
+    bottom: 0; /* Slide up when toggled */
+  }
+
+  .chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+  }
+
+  .close-chat {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  /* 4. Floating Action Button (FAB) */
+  .mobile-chat-fab {
+    display: flex !important;
+    position: fixed;
+    bottom: 30px;
+    right: 25px;
+    
+    /* ⚡ SIZING FOR PERFECT CIRCLE */
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important; /* Forces a perfect circle */
+    
+    /* ⚡ THEME-REACTIVE COLORS */
+    background: var(--text) !important; /* Becomes white in dark mode, dark in light */
+    color: var(--bg) !important;      /* Becomes black in dark mode, light in light */
+    border: 2px solid var(--border) !important;
+    
+    /* ⚡ ALIGNMENT */
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    z-index: 9999;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 150ms ease;
+  }
+
+  .mobile-chat-fab:active {
+    transform: scale(0.92); /* Nice little press effect */
+  }
+
+  /* This ensures the button is completely removed and unclickable when chat is open */
+.chat-card.open ~ .mobile-chat-fab {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+}
+
+/* --- DESKTOP SAFETY: Hide mobile elements --- */
+@media (min-width: 769px) {
+  .mobile-chat-fab, .close-chat {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* 1. Winner Section - Scale down for small screens */
+  .winner-section {
+    padding: 20px 10px;
+    text-align: center;
+  }
+
+  .winner-avatar {
+    width: 80px !important;
+    height: 80px !important;
+    margin: 0 auto 10px;
+  }
+
+  .winner-name {
+    font-size: 1.5rem !important;
+    word-break: break-word;
+  }
+
+  /* 2. Scoreboard - Use Grid for perfect alignment */
+  .score-row {
+    display: grid !important;
+    /* Rank (30px) | Avatar/Name (Flexible) | Points (70px) */
+    grid-template-columns: 30px 1fr 70px !important; 
+    align-items: center;
+    gap: 10px;
+    padding: 12px 10px !important;
+  }
+
+  .score-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden; /* Prevents long names from pushing points out */
+  }
+
+  .score-avatar {
+    width: 30px !important;
+    height: 30px !important;
+    flex-shrink: 0;
+  }
+
+  .score-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds '...' to long names */
+    font-size: 0.95rem;
+  }
+
+  .score-points {
+    text-align: right;
+    font-weight: 700;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+
+  /* 3. Stats Card */
+  .stat-row {
+    font-size: 0.9rem !important;
+    padding: 8px 0;
+  }
+
+  /* 4. Buttons - Stack them for easier thumb reach */
+  .complete-buttons {
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .complete-buttons .primary-btn {
+    width: 100% !important;
+    height: 55px !important;
   }
 }

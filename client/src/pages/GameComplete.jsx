@@ -113,8 +113,11 @@ return (
       <div className="score-list">
         {sortedPlayers.map((player, index) => (
           <div key={player.id} className="score-row">
+            {/* 1. Rank Slot */}
+            <span className="score-rank">{index + 1}</span>
+
+            {/* 2. Content Slot (Avatar + Name) */}
             <div className="score-left">
-              <span className="score-rank">{index + 1}</span>
               <img
                 className="score-avatar"
                 src={
@@ -122,11 +125,12 @@ return (
                     ? avatarsLight[player.avatar || 0]
                     : avatarsDark[player.avatar || 0]
                 }
+                alt="avatar"
               />
-
               <span className="score-name">{player.name}</span>
             </div>
 
+            {/* 3. Points Slot */}
             <div className="score-points">{player.score} pts</div>
           </div>
         ))}

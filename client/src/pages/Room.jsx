@@ -130,6 +130,7 @@ function Room() {
             onChange={(e) =>
               setRoomCode(e.target.value.toUpperCase().replace(/\s/g, ""))
             }
+            onKeyDown={(e) => e.key === "Enter" && joinRoom()}
           />
 
           <button className="room-btn" onClick={joinRoom}>

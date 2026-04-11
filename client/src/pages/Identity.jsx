@@ -131,6 +131,7 @@ function Identity() {
         className="name-input-line"
         value={name}
         maxLength={16}
+        autoFocus
         onChange={(e) => setName(e.target.value)}
       />
 

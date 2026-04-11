@@ -24,10 +24,12 @@ import { useLocation } from "react-router-dom";
 import socket from "../socket";
 
 function Game() {
-
   const location = useLocation();
 
   const navigate = useNavigate();
+
+  // Add this with your other useState hooks
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const avatarsDark = [
     avatar1Dark,
@@ -51,7 +53,6 @@ function Game() {
     avatar8Light,
   ];
 
-  
   const initialPlayers = location.state?.players || [];
   const roomId = location.state?.roomId || null;
   const game = location.state?.game || null;
@@ -64,8 +65,8 @@ function Game() {
   const [timer, setTimer] = useState(30);
   const [currentLetter, setCurrentLetter] = useState(game?.currentLetter || "");
   const [isLight, setIsLight] = useState(
-  document.body.classList.contains("light"),
-);
+    document.body.classList.contains("light"),
+  );
   // const myIdRef = useRef(null);
   const [requiredLength, setRequiredLength] = useState(3);
 
@@ -74,8 +75,6 @@ function Game() {
   const [chatText, setChatText] = useState("");
   const [mode, setMode] = useState(game?.mode || "Word Duel");
   const [myId, setMyId] = useState("");
-
-
 
   const sendChat = () => {
     if (!chatText.trim()) return;
@@ -88,34 +87,32 @@ function Game() {
     setChatText("");
   };
 
-useEffect(() => {
-  if (socket.id) {
-    setMyId(socket.id);
-  }
+  useEffect(() => {
+    if (socket.id) {
+      setMyId(socket.id);
+    }
 
-  const handleConnect = () => {
-    setMyId(socket.id);
-  };
+    const handleConnect = () => {
+      setMyId(socket.id);
+    };
 
-  socket.on("connect", handleConnect);
+    socket.on("connect", handleConnect);
 
-  return () => socket.off("connect", handleConnect);
-}, []);
+    return () => socket.off("connect", handleConnect);
+  }, []);
 
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsLight(document.body.classList.contains("light"));
+    });
 
-useEffect(() => {
-  const observer = new MutationObserver(() => {
-    setIsLight(document.body.classList.contains("light"));
-  });
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
 
-  observer.observe(document.body, {
-    attributes: true,
-    attributeFilter: ["class"],
-  });
-
-  return () => observer.disconnect();
-}, []);
-
+    return () => observer.disconnect();
+  }, []);
 
   const inputRef = useRef(null); // 👈 ADD HERE
 
@@ -126,11 +123,11 @@ useEffect(() => {
   const [players, setPlayers] = useState(initialPlayers);
   const [chat, setChat] = useState([]);
 
-useEffect(() => {
-  if (initialPlayers.length) {
-    setPlayers(initialPlayers);
-  }
-}, [initialPlayers]);
+  useEffect(() => {
+    if (initialPlayers.length) {
+      setPlayers(initialPlayers);
+    }
+  }, [initialPlayers]);
 
   useEffect(() => {
     socket.on("chatUpdate", (data) => {
@@ -142,60 +139,71 @@ useEffect(() => {
 
   const [category, setCategory] = useState(null);
 
-
   useEffect(() => {
-  socket.on("gameStarted", (data) => {
-    setPlayers([...data.players]);
-    setCurrentLetter(data.game.currentLetter);
-    setRequiredLength(data.wordLength || 3);
-    setMode(data.game.mode);
+    socket.on("gameStarted", (data) => {
+      setPlayers([...data.players]);
+      setCurrentLetter(data.game.currentLetter);
+      setRequiredLength(data.wordLength || 3);
+      setMode(data.game.mode);
+    });
 
-  });
-
-  return () => socket.off("gameStarted");
-}, []);
-
+    return () => socket.off("gameStarted");
+  }, []);
 
   /* =========================
         TIMER
   ========================== */
-useEffect(() => {
-  const handleTurn = (data) => {
-    setMode(data.mode);
-    setTimer(data.timer);
-    setRequiredLength(data.wordLength);
-    setRound(data.round);
-    setCategory(data.category || null);
+  /* =========================
+      TURN & TIMER LOGIC
+========================== */
+  useEffect(() => {
+    const handleTurn = (data) => {
+      setMode(data.mode);
+      setTimer(data.timer);
+      setRequiredLength(data.wordLength);
+      setRound(data.round);
+      setCategory(data.category || null);
 
-    setPlayers((prev) =>
-      prev.map((p) => ({
-        ...p,
-        turn: p.id === data.playerId,
-      })),
-    );
+      setPlayers((prev) =>
+        prev.map((p) => ({
+          ...p,
+          turn: p.id === data.playerId,
+        })),
+      );
 
-    setMyTurn(data.playerId === socket.id);
+      // Calculate if it is my turn
+      const isItMyTurn = data.playerId === socket.id;
+      setMyTurn(isItMyTurn);
+
+      // ⚡ AUTO-FOCUS LOGIC
+      if (isItMyTurn) {
+        // Smallest possible delay to ensure React has enabled the input
+        // before we try to pull the cursor into it.
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 10);
+      }
+    };
+
+    const handleTimer = (time) => {
+      setTimer(time);
+    };
+
+    socket.on("turnStarted", handleTurn);
+    socket.on("timerUpdate", handleTimer);
+
+    return () => {
+      socket.off("turnStarted", handleTurn);
+      socket.off("timerUpdate", handleTimer);
+    };
+  }, []); // Empty dependency array is fine since we use socket.id inside the handler
+
+  const triggerShake = () => {
+    if (shake) return;
+
+    setShake(true);
+    setTimeout(() => setShake(false), 350);
   };
-
-  const handleTimer = (time) => {
-    setTimer(time);
-  };
-
-  socket.on("turnStarted", handleTurn);
-  socket.on("timerUpdate", handleTimer);
-
-  return () => {
-    socket.off("turnStarted", handleTurn);
-    socket.off("timerUpdate", handleTimer);
-  };
-}, []);
-
-const triggerShake = () => {
-  if (shake) return;
-
-  setShake(true);
-  setTimeout(() => setShake(false), 350);
-};
   /* =========================
         WORD SUBMIT
   ========================== */
@@ -288,7 +296,6 @@ const triggerShake = () => {
     return () => socket.off("gameEnded", handleEnd);
   }, []);
 
-
   useEffect(() => {
     const handleWord = (data) => {
       setDisplayWord(data.word);
@@ -315,7 +322,6 @@ const triggerShake = () => {
     return () => socket.off("wordAccepted", handleWord);
   }, []);
 
-
   // useEffect(() => {
   //   const assignId = () => {
   //     myIdRef.current = socket.id;
@@ -329,8 +335,6 @@ const triggerShake = () => {
 
   //   return () => socket.off("connect", assignId);
   // }, []);
-
-
 
   // useEffect(() => {
   //   if (!initialPlayers.length) return;
@@ -349,11 +353,9 @@ const triggerShake = () => {
   //   return () => socket.off("connect", waitForId);
   // }, [initialPlayers]);
 
-
   if (!roomId) {
     return <div style={{ padding: 50 }}>Loading Game...</div>;
   }
-
 
   return (
     <section className="game-page page">
@@ -455,8 +457,16 @@ const triggerShake = () => {
         </div>
 
         {/* CHAT CARD */}
-        <div className="game-card chat-card">
-          <h3>ROOM CHAT</h3>
+        {/* CHAT CARD */}
+        <div className={`game-card chat-card ${isChatOpen ? "open" : ""}`}>
+          <div className="chat-header">
+            <h3>ROOM CHAT</h3>
+            {/* X button to close the drawer on mobile */}
+            <button className="close-chat" onClick={() => setIsChatOpen(false)}>
+              ×
+            </button>
+          </div>
+
           <div className="chat-divider"></div>
 
           <div className="chat-list">
@@ -494,6 +504,7 @@ const triggerShake = () => {
                   </div>
                 );
               }
+              return null;
             })}
           </div>
 
@@ -504,13 +515,21 @@ const triggerShake = () => {
               onChange={(e) => setChatText(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendChat()}
             />
-
             <button className="chat-send-btn" onClick={sendChat}>
               SEND
             </button>
           </div>
         </div>
       </div>
+      {!isChatOpen && (
+        <button
+          className="mobile-chat-fab"
+          onClick={() => setIsChatOpen(true)}
+          aria-label="Open Chat"
+        >
+          ●
+        </button>
+      )}
     </section>
   );
 }
