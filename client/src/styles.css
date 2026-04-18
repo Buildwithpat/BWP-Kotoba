@@ -2174,3 +2174,60 @@ body.light {
     height: 55px !important;
   }
 }
+
+@media (max-width: 768px) {
+  .word-area {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 120px !important; 
+    /* This ensures everything stays dead-center in your grid */
+  }
+
+  .word-display {
+    /* No absolute positioning needed anymore since the input is invisible */
+    font-size: 2rem !important; 
+    letter-spacing: 4px !important;
+    width: 100% !important;
+    text-align: center !important;
+    color: var(--text) !important;
+    z-index: 5;
+    /* This allows the -o- to look slightly like a UI hint */
+    opacity: 1;
+  }
+
+  .word-input {
+    /* We remove the border-bottom here to get rid of the line */
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0 !important; /* Makes the real input and its line invisible */
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    cursor: text !important;
+    /* pointer-events stay enabled so you can still click to focus */
+  }
+}
+
+.word-display {
+  /* This ensures the -o- or the word is always centered */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+/* Optional: Make the -o- slightly dimmer if you want it to look like a placeholder */
+.word-display:contains("-o-") {
+  opacity: 0.5;
+}
+
+.word-input {
+  /* Keep the input functional but invisible so it doesn't move things around */
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 100%;
+}

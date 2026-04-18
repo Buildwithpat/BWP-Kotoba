@@ -384,7 +384,8 @@ function Game() {
         <div
           className={`word-display ${shake ? "shake" : ""} ${fade ? "fade-out" : ""}`}
         >
-          {displayWord || currentWord}
+          {/* If there's an accepted word, show it. Otherwise, show current typing OR the placeholder */}
+          {displayWord || (currentWord ? currentWord : "-o-")}
         </div>
 
         <input
